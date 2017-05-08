@@ -12,7 +12,7 @@ var bundle = require('pull-bundle')
 
 pull(
   read([ 'index.js', 'lib/**/*.js' ], { cwd: __dirname }),
-  bundle('app.js'),
+  bundle('app.js', ['babelify', 'es2040']),
   write('out', err => {
     // finished
   })
