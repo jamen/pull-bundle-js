@@ -19,11 +19,11 @@ function bundle (settings, transform) {
   const pass = settings.pass !== undefined ? settings.pass : true
   const base = typeof dest === 'object' ? dest.base : null
   const path = typeof dest === 'object' ? dest.path : dest
+  const b = browserify(settings)
+  let sent = false
 
   // Bundler stream
   return function reader (read) {
-    const b = browserify(settings)
-    let sent = false
     return function write (end, cb) {
       read(end, function (end, file) {
         if (!sent && end === true) {
@@ -35,17 +35,12 @@ function bundle (settings, transform) {
         } else if (end) {
           return cb(end)
         } else {
-          const path = file.path
-          const base = file.base
-          if (extname(path) === '.js') {
-            b.add(base ? join(base, path) : path)
-            write(null, cb)
+          if (extname(file.path) === '.js') {
+            b.add(file.base ? join(file.base, file.path) : file.path)
           } else if (pass) {
             cb(null, file)
-            write(null, cb)
-          } else {
-            write(null, cb)
           }
+          write(null, cb)
         }
       })
     }
