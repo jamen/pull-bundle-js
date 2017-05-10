@@ -12,6 +12,8 @@ function bundle (settings, transform) {
     if (transform) {
       settings.transform = transform
     }
+  } else if (Array.isArray(settings)) {
+    settings = { transforms: settings }
   }
   
   // Settings
