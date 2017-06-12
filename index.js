@@ -18,7 +18,8 @@ function bundle (path, options) {
   }
 
   options = Object.assign({
-    strict: true,
+    strict: false,
+    path: 'app.js',
     // maybe others in future
   }, options)
 

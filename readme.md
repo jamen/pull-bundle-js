@@ -33,7 +33,8 @@ Bundles commonjs files using [Browserify](https://github.com/substack/node-brows
 
 The `options` are passed to [`browserify(options)`](https://www.npmjs.com/package/browserify#browserifyfiles--opts), in addition to:
 
- - `path`: Path of the resulting bundle.  Optional if the path will never be used (e.g. bundling into HTML after)
+ - `path`: Path of the resulting bundle.  Optional if the path will never be used (e.g. goes into HTML directly after)
+ - `strict`: Only allow files with `.js` to pass through.  Defaults to `false`
 
 You can also pass `options` as an array as a shorthand for `transforms: [ ...options ]`
 
