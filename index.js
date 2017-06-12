@@ -6,10 +6,15 @@ var browserify = require('browserify')
 module.exports = bundle
 
 function bundle (path, options) {
-  // fix bundle(options) usage
+  // Fix bundle(options) usage
   if (!options) {
     options = path
     path = null
+  }
+
+  // Fix bundle(path?, transforms) shorthand
+  if (Array.isArray(options)) {
+    options = { transforms: options }
   }
 
   options = Object.assign({

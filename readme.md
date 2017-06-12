@@ -27,13 +27,15 @@ npm i pull-bundle-js
 
 ## Usage
 
-### `bundle(path?, transforms?)`
+### `bundle(path?, options?)`
 
 Bundles commonjs files using [Browserify](https://github.com/substack/node-browserify) to use commonjs modules and several Node.js built-ins on the browser
 
 The `options` are passed to [`browserify(options)`](https://www.npmjs.com/package/browserify#browserifyfiles--opts), in addition to:
 
  - `path`: Path of the resulting bundle.  Optional if the path will never be used (e.g. bundling into HTML after)
+
+You can also pass `options` as an array as a shorthand for `transforms: [ ...options ]`
 
 ## Also see
 
