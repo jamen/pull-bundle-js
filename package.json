@@ -1,6 +1,6 @@
 {
   "name": "pull-bundle-js",
-  "description": "Bundle JavaScript files inside pull-stream",
+  "description": "Bundle JS files inside pull-stream with Browserify",
   "version": "0.3.0",
   "homepage": "https://github.com/jamen/pull-bundle-js",
   "author": "Jamen Marz (https://git.io/jamen)",
@@ -28,7 +28,6 @@
     "jamen",
     "pull-stream",
     "pull-build-tools",
-    "pull-bundle",
     "browserify",
     "bundle",
     "commonjs",

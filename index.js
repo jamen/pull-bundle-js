@@ -1,50 +1,51 @@
 
-const { asyncMap, filter } = require('pull-stream')
-const { extname, join } = require('path')
-const browserify = require('browserify')
+var { asyncMap, filter } = require('pull-stream')
+var { extname, join } = require('path')
+var browserify = require('browserify')
 
 module.exports = bundle
 
-function bundle (settings, transform) {
-  // Shorthand `bundle(dest, transforms)` usage:
-  if (typeof settings === 'string') {
-    settings = { dest: settings }
-    if (transform) {
-      settings.transform = transform
-    }
-  } else if (Array.isArray(settings)) {
-    settings = { transforms: settings }
+function bundle (path, options) {
+  // fix bundle(options) usage
+  if (!options) {
+    options = path
+    path = null
   }
-  
-  // Settings
-  const dest = settings.dest
-  const pass = settings.pass !== undefined ? settings.pass : true
-  const base = typeof dest === 'object' ? dest.base : null
-  const path = typeof dest === 'object' ? dest.path : dest
-  const b = browserify(settings)
-  let sent = false
 
-  // Bundler stream
-  return function reader (read) {
+  options = Object.assign({
+    strict: true,
+    // maybe others in future
+  }, options)
+
+  // Correct path if in options
+  if (!path && options.path) {
+    path = options.path
+  }
+
+  var b = browserify(options)
+  var sent = false
+
+  return function (read) {
     return function write (end, cb) {
       read(end, function (end, file) {
         if (!sent && end === true) {
           b.bundle((err, data) => {
             if (err) return cb(err)
             sent = true
-            cb(null, { base, path, data })
+            cb(null, { path, data })
           })
         } else if (end) {
           return cb(end)
         } else {
           if (extname(file.path) === '.js') {
             b.add(file.base ? join(file.base, file.path) : file.path)
-          } else if (pass) {
-            cb(null, file)
-          }
+          } else if (strict) {
+            return cb(new Error(`Can only bundle JS files (got ${file.path})`))
+          } 
           write(null, cb)
         }
       })
     }
   }
 }
+

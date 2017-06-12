@@ -1,9 +1,9 @@
 
 # pull-bundle-js
 
-> Bundle JavaScript files inside a pull-stream
+> Bundle JS files inside pull-stream with Browserify
 
-When [streaming files](https://npmjs.com/pull-files), use this to bundle the JavaScript with [`browserify`](https://npmjs.com/browserify).
+Bundles the [js pull-stream files](https://github.com/jamen/pull-files) using [Browserify](https://github.com/substack/node-browserify)
 
 ```js
 var pull = require('pull-stream')
@@ -22,27 +22,22 @@ pull(
 ## Install
 
 ```sh
-npm install --save-dev pull-bundle
-```
-
-```sh
-yarn add --dev pull-bundle
+npm i pull-bundle-js
 ```
 
 ## Usage
 
-### `bundle(options)`
+### `bundle(path?, transforms?)`
 
-### `bundle(path?, transform?)`
+Bundles commonjs files using [Browserify](https://github.com/substack/node-browserify) to use commonjs modules and several Node.js built-ins on the browser
 
-Bundles commonjs files using [Browserify](https://github.com/substack/node-browserify) for use on the browser.
+The `options` are passed to [`browserify(options)`](https://www.npmjs.com/package/browserify#browserifyfiles--opts), in addition to:
 
-The options from `options` (or the shorthand) are passed to [`browserify(options)`](https://www.npmjs.com/package/browserify#browserifyfiles--opts), in addition to:
-
- - `dest`: Path of the resulting bundle
- - `pass`: Allow non-javascript files to pass through the bundle, like CSS files.  (Default: `true`)
-
+ - `path`: Path of the resulting bundle.  Optional if the path will never be used (e.g. bundling into HTML after)
 
 ## Also see
 
- - [`pull-files`](https://npmjs.com/pull-files)
+ - [`pull-files`](https://npmjs.com/pull-files) for reading and writing files
+ - [`pull-bundle-html`](https://github.com/jamen/pull-bundle-html) put your JS and CSS into a boilerplate HTML file
+ - [`pull-minify-js`](https://github.com/jamen/pull-minify-js) to minify it
+
