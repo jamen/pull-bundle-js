@@ -14,7 +14,7 @@ function bundle (path, options) {
 
   // Fix bundle(path?, transforms) shorthand
   if (Array.isArray(options)) {
-    options = { transforms: options }
+    options = { transform: options }
   }
 
   options = Object.assign({
