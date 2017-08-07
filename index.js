@@ -17,17 +17,6 @@ function bundle (path, options) {
     options = { transform: options }
   }
 
-  options = Object.assign({
-    strict: false,
-    path: 'app.js',
-    // maybe others in future
-  }, options)
-
-  // Correct path if in options
-  if (!path && options.path) {
-    path = options.path
-  }
-
   var b = browserify(options)
   var sent = false
 
@@ -43,11 +32,7 @@ function bundle (path, options) {
         } else if (end) {
           return cb(end)
         } else {
-          if (extname(file.path) === '.js') {
-            b.add(file.base ? join(file.base, file.path) : file.path)
-          } else if (strict) {
-            return cb(new Error(`Can only bundle JS files (got ${file.path})`))
-          } 
+          b.add(file.base ? join(file.base, file.path) : file.path)
           write(null, cb)
         }
       })
